@@ -9,6 +9,7 @@
 # include <stdbool.h>
 # include <limits.h>
 
+# define PHILO_MAX_COUNT 200
 # define SUCCESS 0
 # define ERROR 1
 
@@ -58,6 +59,9 @@ void		ft_putstr_fd(char *s, int fd);
 void		print_status(t_philo *philo, char *status);
 void		clean_up(t_data *data);
 bool		is_simulation_running(t_data *data);
+void		error_message_exit(char *text, int signal);
+size_t		ft_strlen(const char *s);
+void		check_input(int argc, char **argv);
 
 /* time.c */
 long long	get_time_in_ms(void);

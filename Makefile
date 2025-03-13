@@ -29,12 +29,11 @@ INCLUDES		= $(INCLUDES_DIR)/philo.h
 
 # Sources
 SRCS_DIR		= srcs/
-SRCS			= $(SRCS_DIR)main.c $(SRCS_DIR)init.c $(SRCS_DIR)utils.c $(SRCS_DIR)philo.c $(SRCS_DIR)monitor.c $(SRCS_DIR)time.c
+SRCS			= $(SRCS_DIR)main.c $(SRCS_DIR)init.c $(SRCS_DIR)utils.c $(SRCS_DIR)philo.c $(SRCS_DIR)monitor.c $(SRCS_DIR)time.c $(SRCS_DIR)input.c $(SRCS_DIR)utils_libft.c
 
 # Objects
 OBJS_DIR		= objs/
 OBJS 			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
-# OBJS			= $(OBJS_DIR)main.o $(OBJS_DIR)init.o $(OBJS_DIR)utils.o $(OBJS_DIR)philo.o $(OBJS_DIR)monitor.o $(OBJS_DIR)time.o
 
 all : $(OBJS_DIR) $(NAME) $(INCLUDES)
 
@@ -42,20 +41,20 @@ $(OBJS_DIR) :
 	@$(MKDIR) $(OBJS_DIR)
 
 $(NAME) : $(OBJS) Makefile
-	@echo $(BUILD) $(GREEN) "Compiling $(NAME)..." $(RESET)
+	@echo $(BUILD) $(CYAN) "Compiling $(NAME)..." $(RESET)
 	@$(CC) $(CFLAGS) $(OBJS) $(LINKER) -o $(NAME)
-	@echo $(SUCCESS) $(YELLOW) "Compiling $(NAME) FINISHED" $(RESET)
+	@echo $(SUCCESS) $(GREEN) "Compiling $(NAME) FINISHED" $(RESET)
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c $(INCLUDES)
 	@$(CC) $(CFLAGS) $(INCLUDES_FLAG) -c $< -o $@
 
 clean :
 	@$(RM) $(OBJS_DIR)
-	@echo $(CLEAN) $(RED) "Cleaned!" $(RESET)
+	@echo $(CLEAN) $(YELLOW) "Cleaned!" $(RESET)
 
 fclean : clean
 	@$(RM) $(NAME)
-	@echo $(CLEAN) $(RED) "Full Cleaned!" $(RESET)
+	@echo $(CLEAN) $(YELLOW) "Full Cleaned!" $(RESET)
 
 re: fclean all
 
