@@ -11,9 +11,10 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("[number_of_times_each_philosopher_must_eat]\n", 1);
 		return (ERROR);
 	}
-	check_input(argc, argv);
+	if (check_input(argc, argv) == 1)
+		return (ERROR);
 	if (!init_data(&data, argc, argv))
-		error_message_exit("Error: Failed to initialize data\n", 2);
+		return (exit_with_error("Error: Failed to initialize data\n", 2));
 	if (!init_mutexes(&data) || !init_philos(&data) || !init_threads(&data))
 	{
 		clean_up(&data);

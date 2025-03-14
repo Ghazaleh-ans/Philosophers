@@ -59,9 +59,9 @@ void		ft_putstr_fd(char *s, int fd);
 void		print_status(t_philo *philo, char *status);
 void		clean_up(t_data *data);
 bool		is_simulation_running(t_data *data);
-void		error_message_exit(char *text, int signal);
+int			exit_with_error(char *text, int signal);
 size_t		ft_strlen(const char *s);
-void		check_input(int argc, char **argv);
+int		check_input(int argc, char **argv);
 
 /* time.c */
 long long	get_time_in_ms(void);

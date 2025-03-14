@@ -1,10 +1,10 @@
 #include "../includes/philo.h"
 
-int	ft_atoi(const char *str)
+int ft_atoi(const char *str)
 {
-	int	result;
-	int	sign;
-	int	i;
+	int result;
+	int sign;
+	int i;
 
 	result = 0;
 	sign = 1;
@@ -25,12 +25,12 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void ft_putstr_fd(char *s, int fd)
 {
-	int	i;
+	int i;
 
 	if (!s)
-		return ;
+		return;
 	i = 0;
 	while (s[i])
 	{
@@ -39,9 +39,9 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-size_t	ft_strlen(const char *s)
+size_t ft_strlen(const char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i])
@@ -49,9 +49,20 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-void	error_message_exit(char *text, int signal)
+int exit_with_error(char *text, int signal)
 {
+	char *message;
+
 	if (text)
-		write(2, text, ft_strlen(text) + 1);
-	exit(signal);
+		write(2, text, ft_strlen(text));
+	if (signal == 1)
+		return (SUCCESS);
+	else if (signal == 2)
+		return (ERROR);
+	else
+	{
+		message = "Unexpected singal: exit with Signal code\n";
+		write(2, message, ft_strlen(message));
+		return (ERROR);
+	}
 }

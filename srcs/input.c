@@ -14,23 +14,26 @@ int	check_digit_input(char *str)
 	return (SUCCESS);
 }
 
-void	check_input(int argc, char **argv)
+int	check_input(int argc, char **argv)
 {
 	int		i;
 	long	num;
+	char	*message;
 
 	i = 1;
+	message = "Invalid arguments.\n";
 	while (i < argc)
 	{
 		if (check_digit_input(argv[i]) == 1)
-			error_message_exit("Invalid arguments.\n", 1);
+			return (exit_with_error(message, 2));
 		num = ft_atoi(argv[i]);
 		if (i == 1 && (num < 1 || num > PHILO_MAX_COUNT))
-			error_message_exit("Invalid arguments.\n", 1);
+			return (exit_with_error(message, 2));
 		else if (i == 5 && (num < 0 || num > INT_MAX))
-			error_message_exit("Invalid arguments.\n", 1);
+			return (exit_with_error(message, 2));
 		else if (i != 1 && i != 5 && (num < 1 || num > INT_MAX))
-			error_message_exit("Invalid arguments.\n", 1);
+			return (exit_with_error(message, 2));
 		i++;
 	}
+	return (SUCCESS);
 }
