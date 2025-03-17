@@ -1,6 +1,29 @@
 
 #include "../includes/philo.h"
 
+void	*death_news(t_data *data, int i)
+{
+	pthread_mutex_lock(&data->sim_mutex);
+	data->simulation_running = false;
+	pthread_mutex_unlock(&data->sim_mutex);
+	pthread_mutex_lock(&data->print_mutex);
+	printf("%lld %d died\n", time_since_start(data), data->philos[i].id);
+	pthread_mutex_unlock(&data->print_mutex);
+	return (NULL);
+}
+
+void	*enough_food_news(t_data *data)
+{
+	pthread_mutex_lock(&data->sim_mutex);
+	data->simulation_running = false;
+	pthread_mutex_unlock(&data->sim_mutex);
+	pthread_mutex_lock(&data->print_mutex);
+	printf("All philosophers have eaten at least %d times. Simulation ended.\n",
+		data->meals_limit);
+	pthread_mutex_unlock(&data->print_mutex);
+	return (NULL);
+}
+
 void	*monitor_routine(void *arg)
 {
 	t_data	*data;
@@ -13,30 +36,11 @@ void	*monitor_routine(void *arg)
 		while (i < data->num_philos && is_simulation_running(data))
 		{
 			if (check_if_philo_died(&data->philos[i]))
-			{
-				pthread_mutex_lock(&data->sim_mutex);
-				data->simulation_running = false;
-				pthread_mutex_unlock(&data->sim_mutex);
-
-				pthread_mutex_lock(&data->print_mutex);
-				printf("%lld %d died\n", time_since_start(data), data->philos[i].id);
-				pthread_mutex_unlock(&data->print_mutex);
-				return (NULL);
-			}
+				return (death_news(data, i));
 			i++;
 		}
 		if (data->meals_limit > 0 && all_philos_ate_enough(data))
-		{
-			pthread_mutex_lock(&data->sim_mutex);
-			data->simulation_running = false;
-			pthread_mutex_unlock(&data->sim_mutex);
-
-			pthread_mutex_lock(&data->print_mutex);
-			printf("All philosophers have eaten at least %d times. Simulation ended.\n",
-				data->meals_limit);
-			pthread_mutex_unlock(&data->print_mutex);
-			return (NULL);
-		}
+			return (enough_food_news(data));
 		usleep(1000);
 	}
 	return (NULL);

@@ -61,7 +61,7 @@ void		clean_up(t_data *data);
 bool		is_simulation_running(t_data *data);
 int			exit_with_error(char *text, int signal);
 size_t		ft_strlen(const char *s);
-int		check_input(int argc, char **argv);
+int			check_input(int argc, char **argv);
 
 /* time.c */
 long long	get_time_in_ms(void);
@@ -71,12 +71,15 @@ long long	time_since_start(t_data *data);
 /* philo.c */
 void		*philo_routine(void *arg);
 void		philo_eat(t_philo *philo);
+void		even_philo_eat(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		philo_think(t_philo *philo);
 
 /* monitor.c */
 void		*monitor_routine(void *arg);
 bool		check_if_philo_died(t_philo *philo);
+void		*death_news(t_data *data, int i);
+void		*enough_food_news(t_data *data);
 bool		all_philos_ate_enough(t_data *data);
 
 #endif

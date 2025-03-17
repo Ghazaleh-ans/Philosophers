@@ -17,22 +17,28 @@ void	*philo_routine(void *arg)
 	return (NULL);
 }
 
+void	even_philo_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->right_fork->mutex);
+	print_status(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->left_fork->mutex);
+	print_status(philo, "has taken a fork");
+}
+
+void	odd_philo_eat(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->left_fork->mutex);
+	print_status(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->right_fork->mutex);
+	print_status(philo, "has taken a fork");
+}
+
 void	philo_eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(&philo->right_fork->mutex);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(&philo->left_fork->mutex);
-		print_status(philo, "has taken a fork");
-	}
+		even_philo_eat(philo);
 	else
-	{
-		pthread_mutex_lock(&philo->left_fork->mutex);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(&philo->right_fork->mutex);
-		print_status(philo, "has taken a fork");
-	}
+		odd_philo_eat(philo);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->is_eating = true;
 	philo->last_meal_time = get_time_in_ms();

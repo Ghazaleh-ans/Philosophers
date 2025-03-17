@@ -1,58 +1,58 @@
 # Colors
-RESET			= "\033[0m"
-BLACK    		= "\033[30m"    # Black
-RED      		= "\033[31m"    # Red
-GREEN    		= "\033[32m"    # Green
-YELLOW   		= "\033[33m"    # Yellow
-BLUE     		= "\033[34m"    # Blue
-MAGENTA  		= "\033[35m"    # Magenta
-CYAN     		= "\033[36m"    # Cyan
-WHITE    		= "\033[37m"    # White
+RESET            = "\033[0m"
+BLACK            = "\033[30m"    # Black
+RED              = "\033[31m"    # Red
+GREEN            = "\033[32m"    # Green
+YELLOW           = "\033[33m"    # Yellow
+BLUE             = "\033[34m"    # Blue
+MAGENTA          = "\033[35m"    # Magenta
+CYAN             = "\033[36m"    # Cyan
+WHITE            = "\033[37m"    # White
 
 # Emojis
-SUCCESS		= "✅"
-BUILD		= "🔨"
-CLEAN		= "🧹"
+SUCCESS         = "✅"
+BUILD           = "🔨"
+CLEAN           = "🧹"
 
 # Compiler
-NAME			= philo
-CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -pthread
-MAKE			= make -sC
-MKDIR			= mkdir -p
-RM				= rm -rf
+NAME            = philo
+CC              = cc
+CFLAGS          = -Wall -Wextra -Werror -pthread
+MAKE            = make -sC
+MKDIR           = mkdir -p
+RM              = rm -rf
 
 # Includes
-INCLUDES_DIR 	= includes
-INCLUDES_FLAG 	= -I$(INCLUDES_DIR)
-INCLUDES		= $(INCLUDES_DIR)/philo.h
+INCLUDES_DIR    = includes
+INCLUDES_FLAG   = -I$(INCLUDES_DIR)
+INCLUDES        = $(INCLUDES_DIR)/philo.h
 
 # Sources
-SRCS_DIR		= srcs/
-SRCS			= $(SRCS_DIR)main.c $(SRCS_DIR)init.c $(SRCS_DIR)utils.c $(SRCS_DIR)philo.c $(SRCS_DIR)monitor.c $(SRCS_DIR)time.c $(SRCS_DIR)input.c $(SRCS_DIR)utils_libft.c
+SRCS_DIR        = srcs/
+SRCS            = $(SRCS_DIR)main.c $(SRCS_DIR)init.c $(SRCS_DIR)utils.c $(SRCS_DIR)philo.c $(SRCS_DIR)monitor.c $(SRCS_DIR)time.c $(SRCS_DIR)input.c $(SRCS_DIR)utils_libft.c
 
 # Objects
-OBJS_DIR		= objs/
-OBJS 			= $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
+OBJS_DIR        = objs/
+OBJS            = $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 
-all : $(OBJS_DIR) $(NAME) $(INCLUDES)
+all: $(OBJS_DIR) $(NAME)
 
-$(OBJS_DIR) :
+$(OBJS_DIR):
 	@$(MKDIR) $(OBJS_DIR)
 
-$(NAME) : $(OBJS) Makefile
-	@echo $(BUILD) $(CYAN) "Compiling $(NAME)..." $(RESET)
-	@$(CC) $(CFLAGS) $(OBJS) $(LINKER) -o $(NAME)
+$(NAME): $(OBJS) Makefile
+	@echo $(BUILD) $(RED) "Compiling $(NAME)..." $(RESET)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo $(SUCCESS) $(GREEN) "Compiling $(NAME) FINISHED" $(RESET)
 
-$(OBJS_DIR)%.o : $(SRCS_DIR)%.c $(INCLUDES)
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c $(INCLUDES)
 	@$(CC) $(CFLAGS) $(INCLUDES_FLAG) -c $< -o $@
 
-clean :
+clean:
 	@$(RM) $(OBJS_DIR)
 	@echo $(CLEAN) $(YELLOW) "Cleaned!" $(RESET)
 
-fclean : clean
+fclean: clean
 	@$(RM) $(NAME)
 	@echo $(CLEAN) $(YELLOW) "Full Cleaned!" $(RESET)
 
