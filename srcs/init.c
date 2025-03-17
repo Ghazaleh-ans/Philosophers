@@ -2,6 +2,11 @@
 
 int		failed_malloc(t_data *data, int status)
 {
+	if (status > 2 || status < 0)
+	{
+		ft_putstr_fd("Error: Wrong status code for failed malloc!\n", 2);
+		return (false);
+	}
 	if (status == 1)
 		free(data->philos);
 	if (status == 2)
@@ -87,38 +92,6 @@ bool	init_philos(t_data *data)
 	}
 	return (true);
 }
-
-// bool	init_threads(t_data *data)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < data->num_philos)
-// 	{
-// 		if (pthread_create(&data->threads[i], NULL, philo_routine, &data->philos[i]) != 0)
-// 		{
-// 			data->simulation_running = false;
-// 			while (--i >= 0)
-// 				pthread_join(data->threads[i], NULL);
-// 			return (false);
-// 		}
-// 		precise_sleep(1);
-// 		i++;
-// 	}
-// 	if (pthread_create(&data->monitor_thread, NULL, monitor_routine, data) != 0)
-// 	{
-// 		data->simulation_running = false;
-// 		i = 0;
-// 		while (i < data->num_philos)
-// 			pthread_join(data->threads[i++], NULL);
-// 		return (false);
-// 	}
-// 	i = 0;
-// 	while (i < data->num_philos)
-// 		pthread_detach(data->threads[i++]);
-// 	return (true);
-// }
-
 
 bool	create_threads(t_data *data)
 {
