@@ -92,12 +92,6 @@ bool	init_threads(t_data *data)
 	i = 0;
 	if (!create_threads(data))
 		return (thread_error(data));
-	while (i < data->num_philos)
-	{
-		if (pthread_detach(data->threads[i]) != 0)
-			return (thread_error(data));
-		i++;
-	}
 	if (pthread_create(&data->monitor_thread, NULL, monitor_routine, data) != 0)
 		return (thread_error(data));
 	return (true);
