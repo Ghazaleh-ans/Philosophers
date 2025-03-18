@@ -78,32 +78,27 @@ bool	init_philos(t_data *data)
 	return (true);
 }
 
+bool	thread_error(t_data *data)
+{
+	data->simulation_running = false;
+	join_threads(data, data->num_philos);
+	return (false);
+}
+
 bool	init_threads(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	if (!create_threads(data))
-	{
-		data->simulation_running = false;
-		join_threads(data, data->num_philos);
-		return (false);
-	}
+		return (thread_error(data));
 	while (i < data->num_philos)
 	{
 		if (pthread_detach(data->threads[i]) != 0)
-		{
-			data->simulation_running = false;
-			join_threads(data, data->num_philos);
-			return (false);
-		}
+			return (thread_error(data));
 		i++;
 	}
 	if (pthread_create(&data->monitor_thread, NULL, monitor_routine, data) != 0)
-	{
-		data->simulation_running = false;
-		join_threads(data, data->num_philos);
-		return (false);
-	}
+		return (thread_error(data));
 	return (true);
 }

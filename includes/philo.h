@@ -64,6 +64,7 @@ bool		init_data(t_data *data, int argc, char **argv);
 bool		init_mutexes(t_data *data);
 bool		init_philos(t_data *data);
 bool		init_threads(t_data *data);
+bool		thread_error(t_data *data);
 
 /*utils_threads.c*/
 bool		create_threads(t_data *data);
