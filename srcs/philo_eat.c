@@ -28,14 +28,32 @@ void	odd_philo_eat(t_philo *philo)
 	print_status(philo, "has taken a fork");
 }
 
-void	philo_eat(t_philo *philo)
+void	one_philo_eat(t_philo *philo)
 {
-	long long	start_eating_time;
+	pthread_mutex_lock(&philo->left_fork->mutex);
+	print_status(philo, "has taken a fork");
+	precise_sleep(philo->data->time_to_die + 1);
+	pthread_mutex_unlock(&philo->left_fork->mutex);
+}
 
+void	even_odd_eat(t_philo *philo)
+{
 	if (philo->id % 2 == 0)
 		even_philo_eat(philo);
 	else
 		odd_philo_eat(philo);
+}
+
+void	philo_eat(t_philo *philo)
+{
+	long long	start_eating_time;
+
+	if (philo->data->num_philos == 1)
+	{
+		one_philo_eat(philo);
+		return;
+	}
+	even_odd_eat(philo);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->is_eating = true;
 	philo->last_meal_time = get_time_in_ms();
