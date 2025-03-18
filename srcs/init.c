@@ -98,13 +98,13 @@ bool	init_threads(t_data *data)
 		join_threads(data, data->num_philos);
 		return (false);
 	}
+	while (i < data->num_philos)
+		pthread_detach(data->threads[i++]);
 	if (pthread_create(&data->monitor_thread, NULL, monitor_routine, data) != 0)
 	{
 		data->simulation_running = false;
 		join_threads(data, data->num_philos);
 		return (false);
 	}
-	while (i < data->num_philos)
-		pthread_detach(data->threads[i++]);
 	return (true);
 }

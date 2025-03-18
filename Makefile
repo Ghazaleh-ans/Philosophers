@@ -17,7 +17,7 @@ CLEAN           = "🧹"
 # Compiler
 NAME            = philo
 CC              = cc
-CFLAGS          = -Wall -Wextra -Werror -pthread
+CFLAGS          = -Wall -Wextra -Werror -pthread -g
 MAKE            = make -sC
 MKDIR           = mkdir -p
 RM              = rm -rf
