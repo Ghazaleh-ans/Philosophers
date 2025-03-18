@@ -63,19 +63,21 @@ typedef struct s_data
 bool		init_data(t_data *data, int argc, char **argv);
 bool		init_mutexes(t_data *data);
 bool		init_philos(t_data *data);
-bool		init_threads(t_data *data);
 bool		thread_error(t_data *data);
+bool		init_threads(t_data *data);
 
 /*utils_threads.c*/
 bool		create_threads(t_data *data);
 void		join_threads(t_data *data, int count);
 
 /* utils.c */
-int			ft_atoi(const char *str);
-void		ft_putstr_fd(char *s, int fd);
 void		print_status(t_philo *philo, char *status);
 void		clean_up(t_data *data);
 bool		is_simulation_running(t_data *data);
+
+/* utils_libft.c */
+int			ft_atoi(const char *str);
+void		ft_putstr_fd(char *s, int fd);
 int			exit_with_error(char *text, int signal);
 size_t		ft_strlen(const char *s);
 int			check_input(int argc, char **argv);
@@ -87,10 +89,13 @@ long long	time_since_start(t_data *data);
 
 /* philo.c */
 void		*philo_routine(void *arg);
-void		philo_eat(t_philo *philo);
-void		even_philo_eat(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		philo_think(t_philo *philo);
+
+/* philo_eat.c */
+void		philo_eat(t_philo *philo);
+void		even_philo_eat(t_philo *philo);
+void		odd_philo_eat(t_philo *philo);
 
 /* monitor.c */
 void		*monitor_routine(void *arg);
