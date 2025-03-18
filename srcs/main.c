@@ -25,8 +25,7 @@ int	main(int argc, char **argv)
 	}
 	if (check_input(argc, argv) == 1)
 		return (ERROR);
-	if (!init_data(&data, argc, argv))
-		return (exit_with_error("Error: Failed to initialize data\n", 2));
+	init_data(&data, argc, argv);
 	if (!init_mutexes(&data) || !init_philos(&data) || !init_threads(&data))
 	{
 		clean_up(&data);

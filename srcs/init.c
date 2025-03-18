@@ -12,7 +12,7 @@
 
 #include "../includes/philo.h"
 
-bool	init_data(t_data *data, int argc, char **argv)
+void	init_data(t_data *data, int argc, char **argv)
 {
 	data->num_philos = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
@@ -23,7 +23,7 @@ bool	init_data(t_data *data, int argc, char **argv)
 		data->meals_limit = ft_atoi(argv[5]);
 	data->simulation_running = true;
 	data->start_time = get_time_in_ms();
-	return (true);
+	return ;
 }
 
 bool	init_mutexes(t_data *data)
