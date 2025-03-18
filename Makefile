@@ -29,7 +29,9 @@ INCLUDES        = $(INCLUDES_DIR)/philo.h
 
 # Sources
 SRCS_DIR        = srcs/
-SRCS            = $(SRCS_DIR)main.c $(SRCS_DIR)init.c $(SRCS_DIR)utils.c $(SRCS_DIR)philo.c $(SRCS_DIR)monitor.c $(SRCS_DIR)time.c $(SRCS_DIR)input.c $(SRCS_DIR)utils_libft.c
+SRCS            = $(SRCS_DIR)main.c $(SRCS_DIR)init.c $(SRCS_DIR)utils.c $(SRCS_DIR)philo.c \
+					$(SRCS_DIR)monitor.c $(SRCS_DIR)time.c $(SRCS_DIR)input.c $(SRCS_DIR)utils_libft.c \
+					$(SRCS_DIR)utils_threads.c $(SRCS_DIR)philo_eat.c
 
 # Objects
 OBJS_DIR        = objs/

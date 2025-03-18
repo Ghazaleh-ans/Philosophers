@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_libft.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 11:17:10 by gansari           #+#    #+#             */
+/*   Updated: 2025/03/18 11:17:11 by gansari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int result;
-	int sign;
-	int i;
+	int	result;
+	int	sign;
+	int	i;
 
 	result = 0;
 	sign = 1;
@@ -25,12 +37,12 @@ int ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-	int i;
+	int	i;
 
 	if (!s)
-		return;
+		return ;
 	i = 0;
 	while (s[i])
 	{
@@ -39,9 +51,9 @@ void ft_putstr_fd(char *s, int fd)
 	}
 }
 
-size_t ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -49,9 +61,9 @@ size_t ft_strlen(const char *s)
 	return (i);
 }
 
-int exit_with_error(char *text, int signal)
+int	exit_with_error(char *text, int signal)
 {
-	char *message;
+	char	*message;
 
 	if (text)
 		write(2, text, ft_strlen(text));

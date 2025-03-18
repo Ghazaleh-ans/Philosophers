@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 11:17:23 by gansari           #+#    #+#             */
+/*   Updated: 2025/03/18 11:17:25 by gansari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -53,6 +65,10 @@ bool		init_mutexes(t_data *data);
 bool		init_philos(t_data *data);
 bool		init_threads(t_data *data);
 
+/*utils_threads.c*/
+bool		create_threads(t_data *data);
+void		join_threads(t_data *data, int count);
+
 /* utils.c */
 int			ft_atoi(const char *str);
 void		ft_putstr_fd(char *s, int fd);
@@ -62,6 +78,7 @@ bool		is_simulation_running(t_data *data);
 int			exit_with_error(char *text, int signal);
 size_t		ft_strlen(const char *s);
 int			check_input(int argc, char **argv);
+int			failed_malloc(t_data *data, int status);
 
 /* time.c */
 long long	get_time_in_ms(void);

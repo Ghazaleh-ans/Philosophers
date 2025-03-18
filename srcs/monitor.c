@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 11:16:29 by gansari           #+#    #+#             */
+/*   Updated: 2025/03/18 11:16:31 by gansari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/philo.h"
 
@@ -55,7 +66,6 @@ bool	check_if_philo_died(t_philo *philo)
 	time_since_last_meal = get_time_in_ms() - philo->last_meal_time;
 	is_eating = philo->is_eating;
 	pthread_mutex_unlock(&philo->meal_mutex);
-
 	if (!is_eating && time_since_last_meal > philo->data->time_to_die)
 		return (true);
 	return (false);
@@ -74,11 +84,10 @@ bool	all_philos_ate_enough(t_data *data)
 		pthread_mutex_lock(&data->philos[i].meal_mutex);
 		meals_eaten = data->philos[i].meals_eaten;
 		pthread_mutex_unlock(&data->philos[i].meal_mutex);
-
 		if (meals_eaten < data->meals_limit)
 		{
 			all_ate_enough = false;
-			break;
+			break ;
 		}
 		i++;
 	}

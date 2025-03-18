@@ -1,22 +1,16 @@
-#include "../includes/philo.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 11:16:12 by gansari           #+#    #+#             */
+/*   Updated: 2025/03/18 11:16:14 by gansari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int		failed_malloc(t_data *data, int status)
-{
-	if (status > 2 || status < 0)
-	{
-		ft_putstr_fd("Error: Wrong status code for failed malloc!\n", 2);
-		return (false);
-	}
-	if (status == 1)
-		free(data->philos);
-	if (status == 2)
-	{
-		free(data->philos);
-		free(data->forks);
-	}
-	ft_putstr_fd("Error: Memory allocation failed\n", 2);
-	return (false);
-}
+#include "../includes/philo.h"
 
 bool	init_data(t_data *data, int argc, char **argv)
 {
@@ -91,27 +85,6 @@ bool	init_philos(t_data *data)
 		i++;
 	}
 	return (true);
-}
-
-bool	create_threads(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->num_philos)
-	{
-		if (pthread_create(&data->threads[i], NULL, philo_routine, &data->philos[i]) != 0)
-			return (false);
-		precise_sleep(1);
-		i++;
-	}
-	return (true);
-}
-
-void	join_threads(t_data *data, int count)
-{
-	while (--count >= 0)
-		pthread_join(data->threads[count], NULL);
 }
 
 bool	init_threads(t_data *data)

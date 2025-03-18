@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 11:16:49 by gansari           #+#    #+#             */
+/*   Updated: 2025/03/18 11:16:54 by gansari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/philo.h"
 
@@ -20,7 +31,7 @@ void	precise_sleep(long long ms)
 	{
 		elapsed = get_time_in_ms() - start;
 		if (elapsed >= ms)
-			break;
+			break ;
 		remaining = ms - elapsed;
 		if (remaining > 1)
 		{

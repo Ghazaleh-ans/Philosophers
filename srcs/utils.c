@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/18 11:17:01 by gansari           #+#    #+#             */
+/*   Updated: 2025/03/18 11:17:03 by gansari          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/philo.h"
 
 void	print_status(t_philo *philo, char *status)
@@ -45,4 +57,22 @@ bool	is_simulation_running(t_data *data)
 	running = data->simulation_running;
 	pthread_mutex_unlock(&data->sim_mutex);
 	return (running);
+}
+
+int	failed_malloc(t_data *data, int status)
+{
+	if (status > 2 || status < 0)
+	{
+		ft_putstr_fd("Error: Wrong status code for failed malloc!\n", 2);
+		return (false);
+	}
+	if (status == 1)
+		free(data->philos);
+	if (status == 2)
+	{
+		free(data->philos);
+		free(data->forks);
+	}
+	ft_putstr_fd("Error: Memory allocation failed\n", 2);
+	return (false);
 }
