@@ -30,6 +30,12 @@ bool	create_threads(t_data *data)
 
 void	join_threads(t_data *data, int count)
 {
-	while (--count >= 0)
-		pthread_join(data->threads[count], NULL);
+	int	i;
+
+	i = count;
+	while (--i >= 0)
+	{
+		if (pthread_join(data->threads[i], NULL) != 0)
+			exit_with_error("Error: Failed to join thread\n", 2);
+	}
 }

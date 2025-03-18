@@ -21,15 +21,6 @@ bool	init_data(t_data *data, int argc, char **argv)
 	data->meals_limit = -1;
 	if (argc == 6)
 		data->meals_limit = ft_atoi(argv[5]);
-	data->philos = malloc(sizeof(t_philo) * data->num_philos);
-	if (!data->philos)
-		return (failed_malloc(data, 0));
-	data->forks = malloc(sizeof(t_fork) * data->num_philos);
-	if (!data->forks)
-		return (failed_malloc(data, 1));
-	data->threads = malloc(sizeof(pthread_t) * data->num_philos);
-	if (!data->threads)
-		return (failed_malloc(data, 2));
 	data->simulation_running = true;
 	data->start_time = get_time_in_ms();
 	return (true);
@@ -99,7 +90,15 @@ bool	init_threads(t_data *data)
 		return (false);
 	}
 	while (i < data->num_philos)
-		pthread_detach(data->threads[i++]);
+	{
+		if (pthread_detach(data->threads[i]) != 0)
+		{
+			data->simulation_running = false;
+			join_threads(data, data->num_philos);
+			return (false);
+		}
+		i++;
+	}
 	if (pthread_create(&data->monitor_thread, NULL, monitor_routine, data) != 0)
 	{
 		data->simulation_running = false;

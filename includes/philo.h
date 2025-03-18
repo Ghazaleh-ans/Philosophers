@@ -51,9 +51,9 @@ typedef struct s_data
 	int				meals_limit;
 	bool			simulation_running;
 	long long		start_time;
-	t_philo			*philos;
-	t_fork			*forks;
-	pthread_t		*threads;
+	t_philo			philos[PHILO_MAX_COUNT];
+	t_fork			forks[PHILO_MAX_COUNT];
+	pthread_t		threads[PHILO_MAX_COUNT];
 	pthread_t		monitor_thread;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	sim_mutex;
@@ -78,7 +78,6 @@ bool		is_simulation_running(t_data *data);
 int			exit_with_error(char *text, int signal);
 size_t		ft_strlen(const char *s);
 int			check_input(int argc, char **argv);
-int			failed_malloc(t_data *data, int status);
 
 /* time.c */
 long long	get_time_in_ms(void);

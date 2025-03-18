@@ -32,7 +32,8 @@ int	main(int argc, char **argv)
 		clean_up(&data);
 		return (ERROR);
 	}
-	pthread_join(data.monitor_thread, NULL);
+	if (pthread_join(data.monitor_thread, NULL) != 0)
+		return (exit_with_error("Error: Failed to join monitor thread\n", 2));
 	clean_up(&data);
 	return (SUCCESS);
 }
