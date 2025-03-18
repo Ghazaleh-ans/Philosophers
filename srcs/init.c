@@ -87,9 +87,6 @@ bool	thread_error(t_data *data)
 
 bool	init_threads(t_data *data)
 {
-	int	i;
-
-	i = 0;
 	if (!create_threads(data))
 		return (thread_error(data));
 	if (pthread_create(&data->monitor_thread, NULL, monitor_routine, data) != 0)
