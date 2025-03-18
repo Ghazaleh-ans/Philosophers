@@ -58,6 +58,11 @@ fclean: clean
 	@$(RM) $(NAME)
 	@echo $(CLEAN) $(YELLOW) "Full Cleaned!" $(RESET)
 
+sanitize: CFLAGS += -fsanitize=address,undefined,leak
+sanitize: fclean all
+thsan: CFLAGS += -fsanitize=thread
+thsan: re
+debug: CFLAGS += -g3 -fsanitize=address -DDEBUG
+debug: fclean all
 re: fclean all
-
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re valgrind helgrind sanitize thsan debug
