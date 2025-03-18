@@ -17,6 +17,8 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+ 		precise_sleep(10);
 	while (is_simulation_running(philo->data))
 	{
 		philo_think(philo);
