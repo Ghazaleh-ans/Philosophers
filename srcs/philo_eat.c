@@ -51,7 +51,7 @@ void	philo_eat(t_philo *philo)
 	if (philo->data->num_philos == 1)
 	{
 		one_philo_eat(philo);
-		return;
+		return ;
 	}
 	even_odd_eat(philo);
 	pthread_mutex_lock(&philo->meal_mutex);
