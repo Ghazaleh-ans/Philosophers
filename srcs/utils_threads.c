@@ -22,7 +22,6 @@ bool	create_threads(t_data *data)
 		if (pthread_create(&data->threads[i], NULL,
 				philo_routine, &data->philos[i]) != 0)
 			return (false);
-		precise_sleep(1);
 		i++;
 	}
 	return (true);
