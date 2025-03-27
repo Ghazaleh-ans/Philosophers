@@ -18,12 +18,12 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
- 		precise_sleep(10);
+		usleep(10);
 	while (is_simulation_running(philo->data))
 	{
+		philo_think(philo);
 		philo_eat(philo);
 		philo_sleep(philo);
-		philo_think(philo);
 	}
 	return (NULL);
 }
