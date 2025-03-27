@@ -18,12 +18,12 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		usleep(10);
+		usleep(500);
 	while (is_simulation_running(philo->data))
 	{
-		philo_think(philo);
 		philo_eat(philo);
 		philo_sleep(philo);
+		philo_think(philo);
 	}
 	return (NULL);
 }
@@ -36,12 +36,11 @@ void	philo_sleep(t_philo *philo)
 	start_sleeping_time = get_time_in_ms();
 	while (get_time_in_ms() - start_sleeping_time < philo->data->time_to_sleep
 		&& is_simulation_running(philo->data))
-		usleep(100);
+		usleep(500);
 }
 
 void	philo_think(t_philo *philo)
 {
 	print_status(philo, "is thinking");
-	if (philo->data->num_philos % 2 != 0)
-		usleep(500);
+	usleep(500);
 }

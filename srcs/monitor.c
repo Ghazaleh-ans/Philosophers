@@ -48,7 +48,7 @@ void	*monitor_routine(void *arg)
 		}
 		if (data->meals_limit > 0 && all_philos_ate_enough(data))
 			return (enough_food_news(data));
-		usleep(1000);
+		usleep(500);
 	}
 	return (NULL);
 }
