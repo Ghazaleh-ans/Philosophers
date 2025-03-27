@@ -12,7 +12,7 @@
 
 #include "../includes/philo.h"
 
-void	even_philo_eat(t_philo *philo)
+void even_philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->right_fork->mutex);
 	print_status(philo, "has taken a fork");
@@ -20,7 +20,7 @@ void	even_philo_eat(t_philo *philo)
 	print_status(philo, "has taken a fork");
 }
 
-void	odd_philo_eat(t_philo *philo)
+void odd_philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->mutex);
 	print_status(philo, "has taken a fork");
@@ -28,7 +28,7 @@ void	odd_philo_eat(t_philo *philo)
 	print_status(philo, "has taken a fork");
 }
 
-void	one_philo_eat(t_philo *philo)
+void one_philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->mutex);
 	print_status(philo, "has taken a fork");
@@ -36,7 +36,7 @@ void	one_philo_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->left_fork->mutex);
 }
 
-void	even_odd_eat(t_philo *philo)
+void even_odd_eat(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		even_philo_eat(philo);
@@ -44,9 +44,9 @@ void	even_odd_eat(t_philo *philo)
 		odd_philo_eat(philo);
 }
 
-void	philo_eat(t_philo *philo)
+void philo_eat(t_philo *philo)
 {
-	long long	start_eating_time;
+	long long start_eating_time;
 
 	if (philo->data->num_philos == 1)
 	{
@@ -60,13 +60,40 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo->meal_mutex);
 	print_status(philo, "is eating");
 	start_eating_time = get_time_in_ms();
-	while (get_time_in_ms() - start_eating_time < philo->data->time_to_eat
-		&& is_simulation_running(philo->data))
+	while (get_time_in_ms() - start_eating_time < philo->data->time_to_eat && is_simulation_running(philo->data))
 		usleep(100);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->meals_eaten++;
 	philo->is_eating = false;
 	pthread_mutex_unlock(&philo->meal_mutex);
+
+	long long timestamp = time_since_start(philo->data);
+	int left = philo->id - 1;
+	int right = philo->id % 3;
+
+	// Printing
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%lld %d %s %d\n", timestamp, philo->id, "is releasing the fork", left);
+	pthread_mutex_unlock(&philo->data->print_mutex);
+
+	// Relasing left fork
 	pthread_mutex_unlock(&philo->left_fork->mutex);
+
+	// Printing
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%lld %d %s %d\n", timestamp, philo->id, "released fork", left);
+	pthread_mutex_unlock(&philo->data->print_mutex);
+
+	// Printing
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%lld %d %s %d\n", timestamp, philo->id, "is releasing the fork", right);
+	pthread_mutex_unlock(&philo->data->print_mutex);
+
+	// Relasing right fork
 	pthread_mutex_unlock(&philo->right_fork->mutex);
+
+	// Printing
+	pthread_mutex_lock(&philo->data->print_mutex);
+	printf("%lld %d %s %d\n", timestamp, philo->id, "released fork", right);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
