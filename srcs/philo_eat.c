@@ -12,7 +12,7 @@
 
 #include "../includes/philo.h"
 
-void take_forks(t_philo *philo)
+void	take_forks(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->mutex);
 	print_status(philo, "has taken a fork");
@@ -20,22 +20,22 @@ void take_forks(t_philo *philo)
 	print_status(philo, "has taken a fork");
 }
 
-void one_philo_eat(t_philo *philo)
+void	one_philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->mutex);
 	print_status(philo, "has taken a fork");
-	precise_sleep(philo->data->time_to_die + 1);
+	usleep(philo->data->time_to_die * 1000 + 10);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
 }
 
-void philo_eat(t_philo *philo)
+void	philo_eat(t_philo *philo)
 {
 	long long start_eating_time;
 
 	if (philo->data->num_philos == 1)
 	{
 		one_philo_eat(philo);
-		return;
+		return ;
 	}
 	take_forks(philo);
 	pthread_mutex_lock(&philo->meal_mutex);
@@ -50,10 +50,6 @@ void philo_eat(t_philo *philo)
 	philo->meals_eaten++;
 	philo->is_eating = false;
 	pthread_mutex_unlock(&philo->meal_mutex);
-
-	// Relasing left fork
 	pthread_mutex_unlock(&philo->left_fork->mutex);
-
-	// Relasing right fork
 	pthread_mutex_unlock(&philo->right_fork->mutex);
 }
