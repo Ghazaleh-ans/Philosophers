@@ -28,10 +28,6 @@ void	*enough_food_news(t_data *data)
 	pthread_mutex_lock(&data->sim_mutex);
 	data->simulation_running = false;
 	pthread_mutex_unlock(&data->sim_mutex);
-	pthread_mutex_lock(&data->print_mutex);
-	printf("All philosophers have eaten at least %d times. Simulation ended.\n",
-		data->meals_limit);
-	pthread_mutex_unlock(&data->print_mutex);
 	return (NULL);
 }
 
