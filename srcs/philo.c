@@ -17,12 +17,17 @@ void	*philo_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+
 	if (philo->id % 2 == 0)
-		usleep(500);
+		usleep(philo->data->time_to_eat * 500);
 	while (is_simulation_running(philo->data))
 	{
 		philo_eat(philo);
+		if (!is_simulation_running(philo->data))
+			break;
 		philo_sleep(philo);
+		if (!is_simulation_running(philo->data))
+			break;
 		philo_think(philo);
 	}
 	return (NULL);

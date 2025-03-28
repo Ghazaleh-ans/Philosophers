@@ -6,7 +6,7 @@
 /*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:16:12 by gansari           #+#    #+#             */
-/*   Updated: 2025/03/18 11:16:14 by gansari          ###   ########.fr       */
+/*   Updated: 2025/03/28 12:25:18 by gansari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ bool	init_philos(t_data *data)
 		if (data->num_philos == 1)
 			data->philos[i].right_fork = &data->forks[i];
 		else
-			data->philos[i].right_fork = &data->forks[(i + 1) % data->num_philos];
+			data->philos[i].right_fork = 
+				&data->forks[(i + 1) % data->num_philos];
 		if (pthread_mutex_init(&data->philos[i].meal_mutex, NULL) != 0)
 		{
 			while (--i >= 0)

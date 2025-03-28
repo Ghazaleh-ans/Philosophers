@@ -6,7 +6,7 @@
 /*   By: gansari <gansari@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 11:31:40 by gansari           #+#    #+#             */
-/*   Updated: 2025/03/18 11:31:43 by gansari          ###   ########.fr       */
+/*   Updated: 2025/03/28 12:27:15 by gansari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,36 @@
 
 void	take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->left_fork->mutex);
-	print_status(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->right_fork->mutex);
-	print_status(philo, "has taken a fork");
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(&philo->right_fork->mutex);
+		print_status(philo, "has taken a fork");
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		print_status(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->left_fork->mutex);
+		print_status(philo, "has taken a fork");
+		if (philo->data->num_philos % 2 != 0)
+		{
+			usleep(philo->data->time_to_eat * 50);
+		}
+		pthread_mutex_lock(&philo->right_fork->mutex);
+		print_status(philo, "has taken a fork");
+	}
 }
 
 void	one_philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->mutex);
 	print_status(philo, "has taken a fork");
-	usleep(philo->data->time_to_die * 1000 + 10);
+	usleep(philo->data->time_to_die * 1000);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
 }
 
 void	philo_eat(t_philo *philo)
 {
-	long long start_eating_time;
-
 	if (philo->data->num_philos == 1)
 	{
 		one_philo_eat(philo);
@@ -43,9 +55,7 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal_time = get_time_in_ms();
 	pthread_mutex_unlock(&philo->meal_mutex);
 	print_status(philo, "is eating");
-	start_eating_time = get_time_in_ms();
-	while (get_time_in_ms() - start_eating_time < philo->data->time_to_eat && is_simulation_running(philo->data))
-		usleep(500);
+	precise_sleep(philo->data->time_to_eat);
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->meals_eaten++;
 	philo->is_eating = false;
