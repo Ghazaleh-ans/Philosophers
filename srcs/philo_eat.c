@@ -38,7 +38,7 @@ void	one_philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->left_fork->mutex);
 	print_status(philo, "has taken a fork");
-	usleep(philo->data->time_to_die * 1000);
+	usleep((philo->data->time_to_die + 2) * 1000);
 	pthread_mutex_unlock(&philo->left_fork->mutex);
 }
 
